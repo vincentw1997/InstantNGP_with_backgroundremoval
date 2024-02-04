@@ -43,7 +43,13 @@ cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build build --config RelWithDebInfo -j
 ```
 4. Create a conda environment (Anaconda Navigator) on a separate command prompt
+```shell
+conda create -n <name_of_env> python=3.9.17
+```
 5. Activate the conda environment
+```shell
+conda activate <name_of_env>
+```
 6. Navigate to the folder instant-ngp (cd instant-ngp)
 7. Install all the dependencies needed for instantNGP
 ```shell
@@ -53,5 +59,9 @@ pip install -r requirements.txt
 ```shell
 pip install rembg[gpu,cli]
 ```
-9. 
+9. Need to navigate to a particular folder of your video recording
+```shell
+cd <video_path>
+```
+10. Do the COLMAP 
 
