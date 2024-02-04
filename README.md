@@ -32,10 +32,11 @@ The Implementation of InstantNGP (Instant Neural Graphics Primitives) with Backg
 # Quick Guide on Running the Code
 Here is the general guide if you are interested in running the code locally: 
 1. Open the Visual Studio Code command prompt.
-2. Clone the Project InstantNGP from NVIDIA:
+2. Clone the Project InstantNGP from NVIDIA and supporting scripts for preprocessing:
 ```shell
 git clone --recursive https://github.com/nvlabs/instant-ngp
 cd instant-ngp
+git clone https://github.com/vincentw1997/InstantNGP_with_backgroundremoval
 ```
 3. Use CMake to build the project. Use the developer command prompt from Visual Studio Code
 ```shell
@@ -72,5 +73,42 @@ The path to colmap2nerf.py is located on the instant-ngp folder with the followi
 ```shell
 python <path_to_colmap2nerf.py> --video_in <path_to_video_MP4> --video_fps 2 --run_colmap --aabb_scale 8 --out <path_for_transform.json_file>
 ```
-11.  
+11.  Need to create a backup folder for the COLMAP feature extraction part. As COLMAP can have different results for every run. 
+```shell
+xcopy /e <original_folder_path> <backup_folder_path>
+```
+12.  Rename the generated folder from COLMAP from images to imageori for background removal step
+```shell
+cd <original_folder_path>
+rename images imagesori
+```
+13. Remove the background of the images
+```shell
+rembg p ./imagesori ./images
+```
+14. Rename the frames from png to jpg. Using supporting scripts in /instant-ngp/support/png_to_jpg.py
+```shell
+python <path_to_png_to_jpg.py> --target_folder ./images 
+```
+15. Remove lower sharpness images in the dataset using supporting script in /instant-ngp/support/evaluate_sharpness.py. <br /> --percent_delete args determine how much of the dataset lowest sharpness are removed.
+```shell
+python <path_to_evaluate_sharpness.py> --path_folder <original_folder_path> --path_json <original_folder_path> --output_list <original_folder_path> --percent_delete 10.0
+```
+16. Manually delete similar images in the folder. (optional)
+17. Create the train test dataset using supporting scripts in /instant-ngp/support/train_test_v4.py. Still need to be improved as currently it is done manually for every class
+```shell
+python <path_to_train_test_v4.py> --data_path <path_to_images_folder> --test_data_path_to_save <path_to_new_save> --n_jumps 10 --starting_point 10
+```
+18. Copy the original transform.json from COLMAP to all the folders
+19. Start your training using the script in /instant-ngp/scripts/run.py
+```shell
+python <path_to_run.py> --scene <path_to_transform.json> --save_snapshot <path_to_save_the_model> --n_steps 5000
+```
+20. continue with transform_test edit
+21. edit the transform_test based on the test dataset
+22. render the novel images from the trained model
+23. compare the rendered images with comparison metrics
 
+# Future Work
+Maybe need to improve the code pipeline overall and combine it into 1 Python script 
+Add more features or change the U net model used for the background removal 
