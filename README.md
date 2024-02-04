@@ -5,6 +5,7 @@ The Implementation of InstantNGP (Instant Neural Graphics Primitives) with Backg
 ## Disclaimer: Most of the pipeline is based on the InstantNGP pipeline provided by NVIDIA. I highly recommend checking out the main Github repo of InstantNGP (https://github.com/NVlabs/instant-ngp.git)
 1. https://github.com/NVlabs/instant-ngp.git
 2. https://github.com/danielgatis/rembg.git
+3. https://github.com/colmap/colmap.git
 
 ## Special Thanks to My Supervisors:
 1. Prof. Dr. Martin Storath
@@ -12,6 +13,13 @@ The Implementation of InstantNGP (Instant Neural Graphics Primitives) with Backg
 3. Daniel Kawetzki MSc
 
 # Hardware Requirements
+## Requirements from InstantNGP NVIDIA (run on the following dependencies):
+1. NVIDIA GPU
+2. C++14 capable compiler. Windows Visual Studio 2019 or 2022
+3. Windows: CUDA version 11.7 or higher
+4. CMake v3.21 or higher
+5. Python 3.9.17 
+
 ## Recording of the video:
 1. Sony Handycam CX405 with tripod stands
 
@@ -23,7 +31,27 @@ The Implementation of InstantNGP (Instant Neural Graphics Primitives) with Backg
 
 # Quick Guide on Running the Code
 Here is the general guide if you are interested in running the code locally: 
-1. Clone the Project InstantNGP from NVIDIA:
+1. Open the Visual Studio Code command prompt.
+2. Clone the Project InstantNGP from NVIDIA:
 ```shell
 git clone --recursive https://github.com/nvlabs/instant-ngp
-2. 
+cd instant-ngp
+```
+3. Use CMake to build the project. Use the developer command prompt from Visual Studio Code
+```shell
+cmake . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build build --config RelWithDebInfo -j
+```
+4. Create a conda environment (Anaconda Navigator) on a separate command prompt
+5. Activate the conda environment
+6. Navigate to the folder instant-ngp (cd instant-ngp)
+7. Install all the dependencies needed for instantNGP
+```shell
+pip install -r requirements.txt
+```
+8. Install background removal dependency
+```shell
+pip install rembg[gpu,cli]
+```
+9. 
+
