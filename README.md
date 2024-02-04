@@ -64,7 +64,7 @@ pip install rembg[gpu,cli]
 cd <video_path>
 ```
 10. Do the COLMAP preprocessing for the recorded video. Note that the video must be in a folder. The output of this script will form a transform.json file that is required for further InstantNGP processes.
-The path to colmap2nerf.py is located on the instant-ngp folder with the following path instant-ngp/scripts/colmap2nerf.py /n
+The path to colmap2nerf.py is located on the instant-ngp folder with the following path instant-ngp/scripts/colmap2nerf.py \n
 --video_in args need to be the path to the MP4 file
 --video_fps args determines how many frames you want to use per second from the video (usually 2 is enough)
 --aabb_scale args can be determine by powers of 2. e.g. 4, 8, 16, 32. Use smaller values to "crop" the background (usually for smaller objects). If background is important then use larger values
