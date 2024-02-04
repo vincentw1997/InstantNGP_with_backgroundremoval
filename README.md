@@ -44,11 +44,11 @@ cmake --build build --config RelWithDebInfo -j
 ```
 4. Create a conda environment (Anaconda Navigator) on a separate command prompt
 ```shell
-conda create -n <name_of_env> python=3.9.17
+conda create -n my_env python=3.9.17
 ```
 5. Activate the conda environment
 ```shell
-conda activate <name_of_env>
+conda activate my_env
 ```
 6. Navigate to the folder instant-ngp (cd instant-ngp)
 7. Install all the dependencies needed for instantNGP
@@ -63,5 +63,14 @@ pip install rembg[gpu,cli]
 ```shell
 cd <video_path>
 ```
-10. Do the COLMAP 
+10. Do the COLMAP preprocessing for the recorded video. Note that the video must be in a folder. The output of this script will form a transform.json file that is required for further InstantNGP processes.
+The path to colmap2nerf.py is located on the instant-ngp folder with the following path instant-ngp/scripts/colmap2nerf.py
+--video_in args need to be the path to the MP4 file
+--video_fps args determines how many frames you want to use per second from the video (usually 2 is enough)
+--aabb_scale args can be determine by powers of 2. e.g. 4, 8, 16, 32. Use smaller values to "crop" the background (usually for smaller objects). If background is important then use larger values
+--out args determines the output path for the transform.json file
+```shell
+python <path_to_colmap2nerf.py> --video_in <path_to_video_MP4> --video_fps 2 --run_colmap --aabb_scale 8 --out <path_for_transform.json_file>
+```
+11.  
 
